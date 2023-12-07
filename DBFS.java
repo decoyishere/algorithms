@@ -1,4 +1,7 @@
+package algos;
+
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class DFS {
@@ -50,6 +53,26 @@ class Graph {
 
 		}
 
+	}
+	
+	public void bfs(int start) {
+		boolean[] visited = new boolean[vertices];
+		Queue<Integer> queue = new LinkedList<>();
+		
+		visited[start] = true;
+		queue.add(start);
+		
+		while(!queue.isEmpty()) {
+			int curr = queue.poll();
+			
+			for(int neighbor : list[curr]) {
+				if(!visited[neighbor]) {
+					visited[neighbor] = true;
+					queue.add(neighbor);
+				}
+			}
+		}
+		
 	}
 
 }
