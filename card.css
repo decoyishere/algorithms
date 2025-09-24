@@ -1,0 +1,116 @@
+/* ==== Card styles only – keine globalen body/h1-Regeln ==== */
+:root{
+  --border-color:#ddd;
+  --border-radius:12px;
+  --space:12px;
+}
+
+/* Card-Container */
+article{
+  width: 350px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;                 /* runde Ecken clippen Inhalt */
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  background: #fff;
+
+  /* weiche Effekte */
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, opacity .25s ease;
+}
+
+/* Titel NUR in Cards */
+article h1{
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem 0;
+}
+
+/* Header */
+article header{
+  padding: var(--space);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+article header a{
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Main */
+article main{ padding: var(--space); }
+article main a{ color: purple; }
+
+/* Bilder */
+article main img{
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Bild randlos, wenn es der einzige Inhalt ist */
+article main > img:only-child{
+  width: calc(100% + var(--space) * 2);
+  margin: calc(-1 * var(--space));
+  height: auto;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* Footer */
+article footer{ border-top: 1px solid var(--border-color); }
+article footer ul{
+  margin: 0;
+  padding: 8px 6px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+article footer ul li{
+  flex: 1;
+  text-align: center;
+}
+/* Separator nur zwischen Items */
+article footer ul li + li{
+  border-left: 1px solid var(--border-color);
+}
+
+/* ===== Hover-Effekte ===== */
+
+/* leichte Anhebung & Schatten auf der aktiven Card */
+body > main > article:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+/* Nur wenn EINE Card gehovert wird, werden die anderen gedimmt */
+body > main:has(> article:hover) > article:not(:hover){
+  opacity: .45;
+  filter: grayscale(.1) brightness(.85);
+}
+
+/* Optional: Bewegungsreduktion respektieren */
+@media (prefers-reduced-motion: reduce){
+  body > main > article:hover{
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+
+/* ===== Card entrance animation (staggered) ===== */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Document</title>
+    <link href="layout.css" rel="stylesheet" />
+
+    <script src="./main.ts" type="module"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Contact</h1>
+    </header>
+
+    <section>
+      <ul>
+        <li>
+          <a href="/" title="Home"
+            ><i class="fa-solid fa-home"></i> <span>Home</span></a
+          >
+        </li>
+        <li>
+          <a href="/" title="Dashboard"
+            ><i class="fa-solid fa-dashboard"></i> <span>Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a href="/" title="Profile"
+            ><i class="fa-solid fa-user"></i> <span>Profile</span></a
+          >
+        </li>
+        <li>
+          <a href="./contact.html" title="Contact"
+            ><i class="fa-solid fa-message"></i> <span>Contact</span></a
+          >
+        </li>
+      </ul>
+    </section>
+
+    <main>
+  
+
+      <form class="contact-form" action="#" method="post" novalidate>
+  <h2>Contact</h2>
+
+  <label for="name">Name</label>
+  <input id="name" name="name" type="text"
+         placeholder="Jane Doe"
+         required
+         pattern="^[A-Za-zÀ-ÖØ-öø-ÿ' -]{2,}$"
+         title="Bitte Vor- und Nachname, mind. 2 Zeichen." />
+
+  <label for="email">Email address</label>
+  <input id="email" name="email" type="email"
+         placeholder="jane.doe@example.com"
+         required />
+
+  <label for="birthday">Birthday</label>
+  <input id="birthday" name="birthday" type="date"
+         required
+         max="{{heute}}" /> <!-- optional: serverseitig oder händisch einsetzen -->
+
+  <span>What do you like the most?</span>
+  <div class="radio-group">
+    <label><input type="radio" name="like" value="js"   required> JS</label>
+    <label><input type="radio" name="like" value="html"> HTML</label>
+    <label><input type="radio" name="like" value="css" > CSS</label>
+    <label><input type="radio" name="like" value="none"> Cannot make a decision.</label>
+  </div>
+
+  <label for="message">Your message</label>
+  <textarea id="message" name="message" rows="5"
+            placeholder="Enter your message here..."
+            required minlength="10" maxlength="500"></textarea>
+
+  <div class="full">
+    <label class="checkbox">
+      <input type="checkbox" name="tos" required>
+      I accept the terms.
+    </label>
+  </div>
+
+  <div class="actions full">
+    <button type="submit">Send</button>
+    <button type="reset" class="ghost">Reset</button>
+  </div>
+</form>
+
+
+
+</main>
+
+    <footer>
+      <div>Made with <i class="fa-solid fa-heart"></i> by David Sichau</div>
+    </footer>
+  </body>
+</html>

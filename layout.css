@@ -1,0 +1,198 @@
+/* ===== Vars ===== */
+:root{
+  --border-color:#e5e5e5;
+  --space:16px;
+
+  --header-h:64px;
+  --footer-h:44px;
+
+  /* Sidebar flüssig, kein harter Sprung */
+  --aside-min:64px;
+  --aside-max:220px;
+  --aside: clamp(var(--aside-min), 14vw, var(--aside-max));
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; margin:0; }
+
+/* ===== Page frame (Grid) ===== */
+body{
+  color:#111;
+  background:#fff;
+
+  display:grid;
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "footer footer";
+  grid-template-rows: var(--header-h) 1fr var(--footer-h);
+  grid-template-columns: var(--aside) 1fr;
+
+  height:100vh;
+  overflow:hidden;            /* nur aside/main scrollen */
+  position: relative;         /* für die vertikale Linie */
+}
+
+/* Vertikale Linie an der Sidebar-Kante (liegt HINTER dem Inhalt) */
+body::before{
+  content:"";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: var(--aside);
+  width: 1px;
+  background: var(--border-color);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* hebe Layoutflächen über die vertikale Linie */
+body > header,
+body > section,
+body > main,
+body > footer{
+  position: relative;
+  z-index: 1;
+}
+
+/* ----- Header ----- */
+body > header{
+  grid-area:header;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 0 var(--space);
+  /* Titel bündig mit Content (Sidebar + Innenabstand) */
+  padding-left: calc(var(--aside) + var(--space));
+  /* kein border-bottom – Strich zeichnen wir im Main */
+}
+body > header h1{
+  margin:0;
+  font-size:1.75rem;
+  line-height:1;
+  flex:1 1 auto;           /* Titel links, Icons rechts */
+}
+
+/* ----- Sidebar ----- */
+body > section{
+  grid-area:aside;
+  overflow:auto;
+  padding:8px 0;
+  /* WICHTIG: KEIN border-top -> kein Strich über "Home" */
+}
+body > section ul{ list-style:none; margin:0; padding:0; }
+body > section li a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  text-decoration:none;
+  color:#777;
+  font-size:14px;
+}
+body > section li a:hover{ color:#111; }
+body > section li a i{ width:24px; text-align:center; }
+body > section li a span{ display:none; }   /* Labels erst ab großem Screen */
+
+/* ----- Main (Cards-Canvas) ----- */
+body > main{
+  grid-area:main;
+
+  /* eigener Scrollbereich */
+  min-height:0;
+  min-width:0;
+  overflow:auto;
+  scrollbar-gutter: stable both-edges;
+
+  /* Karten nebeneinander, Zeilen starten oben */
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  align-items:flex-start;
+  align-content:flex-start;
+  justify-content:flex-start;
+
+  padding: var(--space);
+  border-top: 1px solid var(--border-color);   /* Strich NUR im Content */
+}
+
+/* ----- Footer ----- */
+body > footer{
+  grid-area:footer;
+  background:#f7f7f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  border-top:1px solid var(--border-color);
+}
+
+/* ===== Sidebar-Labels erst auf großen Screens ===== */
+@media (min-width: 1200px){
+  body > section li a span{ display:inline; }
+}
+
+/* ===== Contact form styles (werden nur auf contact.html genutzt) ===== */
+body > main .contact-form{
+  margin: var(--space) auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+
+  display: grid;
+  grid-template-columns: 180px minmax(300px, 620px);
+  gap: 14px 18px;
+
+  max-width: 940px;
+}
+body > main .contact-form > h2{
+  grid-column: 1 / -1;
+  margin: 0 0 6px 0;
+}
+body > main .contact-form input[type="text"],
+body > main .contact-form input[type="email"],
+body > main .contact-form input[type="date"],
+body > main .contact-form textarea{
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cfcfcf;
+  border-radius: 6px;
+  font: inherit;
+  background: #fff;
+}
+body > main .contact-form .radio-group{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+}
+body > main .contact-form .full{ grid-column: 1 / -1; }
+body > main .contact-form .checkbox{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+body > main .contact-form .actions{
+  display: flex;
+  gap: 10px;
+}
+body > main .contact-form button{
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #2b6ef3;
+  background: #2b6ef3;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+body > main .contact-form button.ghost{
+  background: #fff;
+  color: #2b6ef3;
+}
+
+/* einspaltig auf sehr schmalen Screens */
+@media (max-width: 700px){
+  body > main .contact-form{ grid-template-columns: 1fr; }
+  body > main .contact-form > h2{ margin-bottom: 4px; }
+}
